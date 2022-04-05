@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="Product">
+	<insert id="uploadProduct">
+		INSERT INTO product (id, category, name, brand, price, size, rating,
+		review_num, tag, reg_date)
+		VALUES
+		(#{id},
+		#{category}, #{name}, #{brand},
+		#{price}, #{size},
+		#{rating}, #{review_num}, #{tag}, #{reg_date})
+		<selectKey keyProperty="id" resultType="int">
+			SELECT LAST_INSERT_ID()
+		</selectKey>
+	</insert>
+
+	<select id="getProductList" resultType="product">
+		SELECT * from product
+		order by id DESC
+	</select>
+	<select id="getProduct" resultType="product" parameterType="int">
+		SELECT * from product where id=#{id}
+	</select>
+	<update id="updateProduct">
+		update product set category=#{category},
+		name=#{name}, brand=#{brand}, price=#{price},
+		size=#{size}
+	</update>
+	<delete id="deleteProduct">
+		delete from product where id=#{id}
+	</delete>
+</mapper>

@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="fileDemo">
+
+	<insert id="createExampleImageFile" parameterType="image">
+		INSERT INTO
+		sayhi.fileDemo (
+		imageFileName, imageOrder, product_id)
+		SELECT
+		#{imageFileName},#{imageOrder}, #{product_id}
+	</insert>
+
+	<select id="readExampleImageFile" resultType="image"
+		parameterType="hashmap">
+		SELECT id, imageFileName, imageOrder, product_id
+		FROM
+		sayhi.fileDemo
+	</select>
+	
+	<select id="readExampleImageFileById" resultType="image"
+		parameterType="hashmap">
+		SELECT id, imageFileName, imageOrder, product_id
+		FROM
+		sayhi.fileDemo WHERE product_id=#{product_id}
+	</select>
+
+	<!-- 각 id별 내용 가져오 -->
+	<select id="getImg" resultType="image" parameterType="hashmap">
+		SELECT id, imageFileName, imageOrder, product_id FROM
+		sayhi.fileDemo
+		WHERE id=#{id};
+		<!-- SELECT CA.id, CAF.fileOriginalUrl FROM clubAdvertise CA , hsca219.clubAdvertiseFile 
+			as CAF WHERE CA.id = #{id} and CA.id=CAF.clubAdvertiseId -->
+	</select>
+
+	<delete id="deleteExampleImageFile" parameterType="hashmap">
+		DELETE FROM
+		sayhi.fileDemo
+		WHERE id = #{id}
+	</delete>
+</mapper>
