@@ -32,31 +32,34 @@
 					<img src='${u.getImage()}' width="80%">
 
 				</div> --%>
-	<form name="updateForm" action="../updateok" method="post">
+	<form name="updateForm" action="../updateok" method="post" enctype="multipart/form-data">
 		<table id="update">
 		<h1>상품 수정</h1>
 			<tr>
-				<td>category</td>
+				<td>카테고리</td>
 				<td><input type="text" name="카테고리" value="${u.category}" /></td>
 			</tr>
 			<tr>
-				<td>name</td>
+				<td>상품명</td>
 				<td><input type="text" name="상품명" value="${u.name}" /></td>
 			</tr>
 			<tr>
-				<td>brand</td>
+				<td>브랜드</td>
 				<td><input type="text" name="브랜드명" value="${u.brand}" /></td>
 			</tr>
 			<tr>
-				<td>image</td>
-				<td><input type="text" name="이미지" value="${u.image}" /></td>
+				<td>이미지</td>
+				<td><div class="my-5">
+					<input class="form-control" type="file" id="imagefile"
+						name="imagefile" accept="image/*" multiple>
+				</div></td>
 			</tr>
 			<tr>
-				<td>price</td>
+				<td>가격</td>
 				<td><input type="text" name="가격" value="${u.price}" /></td>
 			</tr>
 			<tr>
-				<td>size</td>
+				<td>사이즈</td>
 				<td><input type="text" name="사이즈" value="${u.size}" /></td>
 			</tr>
 		</table>

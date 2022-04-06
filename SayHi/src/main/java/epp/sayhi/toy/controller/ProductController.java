@@ -31,6 +31,8 @@ public class ProductController {
 
 	@Autowired
 	ImageService imageService;
+	
+	
 
 	@RequestMapping(value = "/list", method = RequestMethod.GET)
 	public ModelAndView readList(HttpSession session, HttpServletRequest request, Model model) {
@@ -62,7 +64,7 @@ public class ProductController {
 //		}
 		productService.uploadProduct(product);
 		int product_id = product.getId();
-		System.out.println(product_id);
+//		System.out.println(product_id);
 		// 이미지 파일 저장
 		int imgOrder = 1;
 
@@ -111,16 +113,6 @@ public class ProductController {
 		return "redirect:list";
 	}
 
-	@RequestMapping(value = "/fileform", method = RequestMethod.GET)
-	public String fileupload() {
-		return "fileform";
-	}
-
-	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
-	public String fileuploadgo() {
-		return "fileupload";
-	}
-
 	@RequestMapping(value = "/detail/{id}", method = RequestMethod.GET)
 	public ModelAndView detailPost(@PathVariable("id") int id, Model model, HttpSession session, HttpServletRequest request) {
 		Product product = productService.getProduct(id);
@@ -135,9 +127,61 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/update/{id}", method = RequestMethod.GET)
-	public String updateProduct(@PathVariable("id") int id, Model model) {
+	public ModelAndView updateProduct(@PathVariable("id") int id, Model model, HttpServletRequest request, MultipartFile file) {
 		model.addAttribute("u", productService.getProduct(id));
-		return "updateform";
+		ModelAndView mv = new ModelAndView();
+		
+		imageService.deleteImageFileList(id);
+//		
+//		Image exampleImageFile = new Image();
+//
+////		List<MultipartFile> imageFile = request.getFiles("imagefile");
+//
+//		//imageFileService.updateImageFileList(imageFile);
+//	
+//		if (imageFile.get(0).getOriginalFilename() != "") {
+//			// 선택된 파일이 있을 때 기존의 파일을 모두 삭제
+//			System.out.println("실행");
+//			imageService.deleteImageFileList(id);
+//			System.out.println("update file");
+//			int imgOrder = 1;
+//			for (MultipartFile newfile : imageFile) {
+//				String imageFileName = newfile.getOriginalFilename();// 원본 파일 명
+//				imgOrder++;
+//				
+//				exampleImageFile.setImageFileName(imageFileName);
+////				exampleImageFile.setImageOrder(imgOrder);
+//
+//				imageService.createExampleImageFile(exampleImageFile);
+//
+//				imgOrder++;
+//				System.out.println(exampleImageFile.toString());				
+//
+//				String saveDir = request.getSession().getServletContext().getRealPath("/resources/upload/image");//현재
+//
+//				File dir = new File(saveDir);
+//				if (!dir.exists()) {
+//					dir.mkdirs();
+//				}
+//
+//				if (!newfile.isEmpty()) {
+//					String ext = imageFileName.substring(imageFileName.lastIndexOf("."));
+//					try {
+//						newfile.transferTo(new File(saveDir + "/" + imageFileName));
+//					} catch (IllegalStateException | IOException e) {
+//						e.printStackTrace();
+//					}
+//				}
+//
+//				System.out.println(saveDir);
+//			}
+//		}
+		
+		
+
+		mv.setViewName("updateform");
+		
+		return mv;
 	}
 
 	@RequestMapping(value = "/updateok", method = RequestMethod.POST)
@@ -146,13 +190,24 @@ public class ProductController {
 			System.out.println("업데이트 성공");
 		else
 			System.out.println("업데이트 실패");
+		
 		return "redirect:list";
 	}
 
-	@RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-	public String deleteProduct(@PathVariable("id") int id) {
+	@RequestMapping(value = "/delete/{id}", method = {RequestMethod.GET, RequestMethod.POST})
+	public ModelAndView deleteProduct(@PathVariable("id") int id, Model model) {
+		ModelAndView mv = new ModelAndView();
+		imageService.deleteImageFileList(id);
 		productService.deleteProduct(id);
-		return "redirect:../list";
+//		List<Image> imgList = imageService.getImg(id);
+
+//		System.out.println(imgList);
+
+//		return mv.setViewName("redirect:/");
+		mv.setViewName("redirect:/");
+		
+		return mv;
+//		return "redirect:../list";
 	}
 
 	@RequestMapping(value = "/create", method = RequestMethod.GET)
