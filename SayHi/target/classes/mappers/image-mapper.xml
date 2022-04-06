@@ -28,7 +28,7 @@
 	<select id="getImg" resultType="image" parameterType="hashmap">
 		SELECT id, imageFileName, imageOrder, product_id FROM
 		sayhi.fileDemo
-		WHERE id=#{id};
+		WHERE product_id=#{product_id};
 		<!-- SELECT CA.id, CAF.fileOriginalUrl FROM clubAdvertise CA , hsca219.clubAdvertiseFile 
 			as CAF WHERE CA.id = #{id} and CA.id=CAF.clubAdvertiseId -->
 	</select>
@@ -36,6 +36,6 @@
 	<delete id="deleteExampleImageFile" parameterType="hashmap">
 		DELETE FROM
 		sayhi.fileDemo
-		WHERE id = #{id}
+		WHERE product_id = #{product_id}
 	</delete>
 </mapper>
