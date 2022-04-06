@@ -81,6 +81,7 @@
     background-color: black;
     font-family: nanumgothic;
     overflow: hidden;
+    z-index: 2;
 }
 
 .login-btn {
@@ -111,6 +112,7 @@
     min-width: 160px;
     border: solid 1px lightgrey;
     top: 140px;
+    z-index: 4;
     
 }
 
@@ -123,7 +125,7 @@
     display: block;
     text-align: center;
     position: relative;
-    z-index: 3;
+    z-index: 5;
 }
 
 .dropdown a:hover{
